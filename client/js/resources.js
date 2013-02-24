@@ -21,7 +21,8 @@ var resources = {
 		"name": "Sand",
 		"description": "Wear shorts or it will get right up there.",
 		"tile": {
-			"fill": "rgb(190, 170, 30)"
+			"fill": "rgb(190, 170, 30)",
+			"image": 2
 		}
 	},
 	3: {

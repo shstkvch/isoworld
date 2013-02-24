@@ -52,6 +52,7 @@ Meteor.startup(function() {
       if (tileConfig.special) {
         console.log('** SPECIAL TILE **', tileConfig);
         // check for special cases
+        ifNotTopTile = false;
         $.each(tileConfig.special, function(specialProperty, value) {
           switch (specialProperty) {
           case 'ifLastInRowOrColumn':
@@ -102,25 +103,45 @@ Meteor.startup(function() {
             // check if this tile is the last in the row
             // console.log("x:", x, "y:", y, "level:", level, "type:", resources[tileResource].name);
             break;
+            
+          case 'ifNotTopTile':
+            ifNotTopTile = true;
+            isNotTopTile = false;
+            
+            if (loadedMap[level + 1] && 
+                loadedMap[level + 1][x] && 
+                loadedMap[level + 1][x][y] && 
+                loadedMap[level + 1][x][y] !== 0) {
+              isNotTopTile = true;
+              debugText = "NOT TOP!";
+            } 
+            break;
           }
         });
 
       }
       if (tileConfig.image) {
         // rendering an image for this block or tile or whatever it is..
-        if (resourceCache[tileConfig.image]) {
+        var imgcode = tileConfig.image;
+        if (ifNotTopTile){
+          if (isNotTopTile) {
+            imgcode = tileConfig.special.ifNotTopTile.image;
+          }
+        }
+        
+        if (resourceCache[imgcode]) {
           //console.log('Resource #' + tileResource + ' is already loaded');
-					cv.drawImage(resourceCache[tileConfig.image], multX, multY, tileWidth, tileHeight); 	
+					cv.drawImage(resourceCache[imgcode], multX, multY, tileWidth, tileHeight); 	
         } else {
           //	console.log('Loading resource #' + tileResource + ' for the first time');
           var image = new Image();
           image.onload = function() {
-            resourceCache[tileConfig.image] = image;
+            resourceCache[imgcode] = image;
             setTimeout(function() {
               redraw()
             }, 100);
           }
-          image.src = resourceDir + tileConfig.image + '.png';
+          image.src = resourceDir + imgcode + '.png';
 
         }
       } else if (tileConfig.fill || tileConfig.stroke) {
@@ -160,22 +181,24 @@ Meteor.startup(function() {
     if (tileLabels) {
       // debug - draw x/y coords and other info on tiles
       cv.fillStyle = 'white';
+      cv.font      = (zoom/10)+ 'px monospace';
+
       var xyz = x + ',' + y + ',' + level;
       var type = resources[tileResource].name + " (#" + tileResource + ")";
       var debugText = debugText || "";
 
       cv.fillText(xyz, multX + (tileWidth / 2) - cv.measureText(xyz).width / 2, multY + (tileDepth / 2));
-      cv.fillText(type, multX + (tileWidth / 2) - cv.measureText(type).width / 2, multY + (tileDepth / 2) - 12);
+      cv.fillText(type, multX + (tileWidth / 2) - cv.measureText(type).width / 2, multY + (tileDepth / 2) - (zoom/10));
       cv.fillStyle = 'yellow';
-      cv.fillText(debugText, multX + (tileWidth / 2) - cv.measureText(type).width / 2, multY + (tileDepth / 2) + 12);
+      cv.fillText(debugText, multX + (tileWidth / 2) - cv.measureText(type).width / 2, multY + (tileDepth / 2) + (zoom/10));
     }
     
     if (debugOverlay) {
       cv.fillStyle = 'white';
       cv.font = '12px monospace';
-      cv.fillText("Pan:  " + pan, 10, 15);
-      cv.fillText("Tilt: " + tilt, 10, 30);
-      cv.fillText("Zoom: " + zoom, 10, 45);
+      cv.fillText("Pan:  " + pan,        10, 15);
+      cv.fillText("Tilt: " + tilt,       10, 30);
+      cv.fillText("Zoom: " + zoom + "%", 10, 45);
     }
   }
 

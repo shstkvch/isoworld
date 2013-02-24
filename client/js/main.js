@@ -13,6 +13,7 @@ Meteor.startup(function() {
 	var tileWidth = 150;
 	var tileDepth = tileHeight / 2;
 	
+	
 	// resources
 	var resourceDir = "/resources/";
 	var resourceCache = [] // cache of resources
@@ -20,11 +21,12 @@ Meteor.startup(function() {
 	// panning & zooming
 	var pan = 0;
 	var tilt = 0;
-	var zoom = 3;
+	var zoom = 100;
+	var zoomunit = 1;
 	
 	// debug shit
 	var debugMode = false; // show console output (laggy)
-	var tileLabels = true; // show debug info on tiles
+	var tileLabels = false;//true; // show debug info on tiles
 	
 	// use the full screen
 	cv.canvas.width = window.innerWidth;
@@ -115,7 +117,7 @@ Meteor.startup(function() {
 				// rendering an image for this block or tile or whatever it is..
 				if(resourceCache[tileConfig.image]) {
 					//console.log('Resource #' + tileResource + ' is already loaded');
-					cv.drawImage(resourceCache[tileConfig.image], multX, multY); 	
+					cv.drawImage(resourceCache[tileConfig.image], multX, multY, tileWidth, tileHeight); 	
 				} else {
 				//	console.log('Loading resource #' + tileResource + ' for the first time');
 					var image = new Image();
@@ -246,10 +248,9 @@ Meteor.startup(function() {
 	// draw the initial map
 	redraw(0,0);
 	
-	// handle dragging & zooming on the map (from http://jsfiddle.net/W7tvD/)
+	// handle dragging on the map (from http://jsfiddle.net/W7tvD/)
 	var lastX;
 	var lastY;
-	var lastZoom;
 	var mousedown = false;
 	$(canvas).mousedown(function(e) {
 		if(e.which == 3) {
@@ -284,6 +285,34 @@ Meteor.startup(function() {
 			redraw();		
 		}
 	});
+	
+	$(canvas).mousewheel(function (e, delta) {
+    e.preventDefault();
+    var oldzoom = zoom;
+    if (delta > 0){
+	    zoom += zoomunit * Math.sqrt(zoom);
+		} else if (delta < 0) {
+			zoom -= zoomunit * Math.sqrt(zoom);
+		}
+		
+		zoom = Math.round(zoom)
+		if (zoom < 1) {
+		  zoom = 1;
+		}
+		if (zoom > 100) {
+		  zoom = 100;
+		}
+    
+    tileHeight = 150 * zoom / 100;
+	  tileWidth = 150 * zoom / 100;
+	  tileDepth = tileHeight / 2;
+	  
+	  var diff = oldzoom - zoom;
+	  pan  = pan + diff * 2;
+  	tilt = tilt + diff * 2;
+		
+		redraw();
+  });
 	
 	if(!debugMode) {
 		console = { log: function() { return false } }

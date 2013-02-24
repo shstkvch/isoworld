@@ -10,7 +10,7 @@ var resources = [
 		"description": "Just some boring grass.",
 		"tile": {
 			"fill": "rgb(0,200,0)",
-			"image": true
+			"image": 1
 		}
 	},
 	{
@@ -26,7 +26,12 @@ var resources = [
 		"name": "Water",
 		"description": "Delicious, clean and free. And wet.",
 		"tile": {
-			"fill": "rgba(40, 150, 255, 0.5)"
+			"fill": "rgba(40, 150, 255, 0.5)",
+			"special": {
+				"ifLastInRowOrColumn": {
+					"fill": "red"
+				}
+			}
 		}
 	},
 	{

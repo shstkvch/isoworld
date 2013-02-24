@@ -228,7 +228,7 @@ Meteor.startup(function() {
   function drawGrid() {
     for (w = 0; w < mapWidth; w++) {
       for (h = 0; h < mapHeight; h++) {
-        drawTile(w, h, 1, -1);
+        drawTile(w, h, 4, -1);
       }
     }
   }

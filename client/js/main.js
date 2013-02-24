@@ -6,8 +6,8 @@ Meteor.startup(function() {
   var mapHeight = 24;
 
   // map stuff
-  var loadedMapName = "";
-  var loadedMap = [];
+  loadedMapName = "";
+  loadedMap = [];
 
   var tileHeight = 150;
   var tileWidth = 150;
@@ -23,7 +23,7 @@ Meteor.startup(function() {
 
   // debug shit
   var debugMode = false; // show console output (laggy)
-  var tileLabels = true; // show debug info on tiles
+  var tileLabels = false; // show debug info on tiles
   // use the full screen
   cv.canvas.width = window.innerWidth;
   cv.canvas.height = window.innerHeight;
@@ -195,7 +195,7 @@ Meteor.startup(function() {
 
     // set the currently loaded map
     loadedMap = mapdata;
-    loadedMapName = mapname;
+    loadedMapName = mapname //|| "Untitled Map";
 
     // TODO: include a flag for this
     // create bottommost layer
@@ -291,6 +291,11 @@ Meteor.startup(function() {
     return false
   };
 
+  // redraw on resize
+  $(window).resize(function() {
+  	redraw();
+  });
+
   // focus!
   canvas.focus();
 
@@ -307,7 +312,7 @@ Meteor.startup(function() {
       alert("No such map! (Or you're trying to load an unsupported map).");
     }
   } else {
-    alert("No map selected. Type maps() in the console for a list.");
+    notify("No map loaded D:");
+    redraw();
   }
 });
-This looks like a JavaScript file. Click this bar to format it.No 3

@@ -211,19 +211,6 @@ Meteor.startup(function() {
     loadedMap = mapdata;
     loadedMapName = mapname //|| "Untitled Map";
 
-    // TODO: include a flag for this
-    // create bottommost layer
-/*for(x=0;x<32;x++) {
-			for(y=0;y<32;y++) {
-				var tileSettings = {};
-				tileSettings.x = x;
-				tileSettings.y = y;
-				tileSettings.resource = 4; // base tile type
-
-				drawTile(tileSettings, -1);
-			}
-		}*/
-
     $.each(mapdata, function(layers, map) {
       $.each(map, function(column, tiles) {
         // console.log('COLUMN ' + column, tiles);
@@ -233,18 +220,15 @@ Meteor.startup(function() {
       });
       currentLevel++;
     });
-
-
-
-    if (loadedMapName) {
+    /*if (loadedMapName) {
       notify("Loaded map '" + loadedMapName + "'!");
-    }
+    }*/
   }
 
   function drawGrid() {
     for (w = 0; w < mapWidth; w++) {
       for (h = 0; h < mapHeight; h++) {
-        drawTile(w, h, 4, -1);
+        drawTile(w, h, 1, -1);
       }
     }
   }

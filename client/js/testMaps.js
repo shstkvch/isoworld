@@ -1,7 +1,12 @@
 // MAPS
-// 1 - 1
-// 2 - dirt
-// 3 - 3
+//
+// 1 - grass
+// 2 - sand
+// 3 - water
+// 4 - grid (utility)
+// 5 - black square
+// 6 - white square
+// (See resources.js for detailed block id info)
 var testMaps = {
 shittybeach: [
 	[

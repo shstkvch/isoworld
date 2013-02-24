@@ -234,19 +234,6 @@ Meteor.startup(function() {
     loadedMap = mapdata;
     loadedMapName = mapname //|| "Untitled Map";
 
-    // TODO: include a flag for this
-    // create bottommost layer
-/*for(x=0;x<32;x++) {
-			for(y=0;y<32;y++) {
-				var tileSettings = {};
-				tileSettings.x = x;
-				tileSettings.y = y;
-				tileSettings.resource = 4; // base tile type
-
-				drawTile(tileSettings, -1);
-			}
-		}*/
-
     $.each(mapdata, function(layers, map) {
       $.each(map, function(column, tiles) {
         // console.log('COLUMN ' + column, tiles);
@@ -256,12 +243,9 @@ Meteor.startup(function() {
       });
       currentLevel++;
     });
-
-
-
-    if (loadedMapName) {
+    /*if (loadedMapName) {
       notify("Loaded map '" + loadedMapName + "'!");
-    }
+    }*/
   }
 
   function drawGrid() {
@@ -368,6 +352,9 @@ Meteor.startup(function() {
       parseMap(testMaps[map], map);
     } else if (type == 'inline') {
       parseMap(map, 'inline map');
+    } else if (type == 'user' || 'world') {
+    	// loading a map that belongs to a user or the world (on the server)
+    	
     } else {
       alert("No such map! (Or you're trying to load an unsupported map).");
     }

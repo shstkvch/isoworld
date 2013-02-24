@@ -9,23 +9,23 @@ Meteor.startup(function() {
   loadedMapName = "";
   loadedMap = [];
 
-  var tileHeight = 150;
-  var tileWidth = 150;
-  var tileDepth = tileHeight / 2;
 
+  
 	
   // resources
   var resourceDir = "/resources/";
   var resourceCache = [] // cache of resources
   // panning & zooming
-  var pan = 0;
-  var tilt = 0;
-	var zoom = 100;
+  var pan  = 630;
+  var tilt = 125;
+	var zoom = 25;
 	var zoomunit = 1;
 
   // debug shit
   var debugMode = false; // show console output (laggy)
+  var debugOverlay = true;
   var tileLabels = false; // show debug info on tiles
+  
   // use the full screen
   cv.canvas.width = window.innerWidth;
   cv.canvas.height = window.innerHeight;
@@ -169,6 +169,14 @@ Meteor.startup(function() {
       cv.fillStyle = 'yellow';
       cv.fillText(debugText, multX + (tileWidth / 2) - cv.measureText(type).width / 2, multY + (tileDepth / 2) + 12);
     }
+    
+    if (debugOverlay) {
+      cv.fillStyle = 'white';
+      cv.font = '12px monospace';
+      cv.fillText("Pan:  " + pan, 10, 15);
+      cv.fillText("Tilt: " + tilt, 10, 30);
+      cv.fillText("Zoom: " + zoom, 10, 45);
+    }
   }
 
 
@@ -183,7 +191,11 @@ Meteor.startup(function() {
   window.redraw = function() {
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
-
+    
+    tileHeight = 150 * zoom / 100;
+	  tileWidth = 150 * zoom / 100;
+	  tileDepth = tileHeight / 2;
+	  
     clearCanvas();
 
     drawGrid();
@@ -295,10 +307,6 @@ Meteor.startup(function() {
 		if (zoom > 100) {
 		  zoom = 100;
 		}
-    
-    tileHeight = 150 * zoom / 100;
-	  tileWidth = 150 * zoom / 100;
-	  tileDepth = tileHeight / 2;
 	  
 	  var diff = oldzoom - zoom;
 	  pan  = pan + diff * 2;

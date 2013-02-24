@@ -20,11 +20,11 @@ Meteor.startup(function() {
 	// panning & zooming
 	var pan = 0;
 	var tilt = 0;
-	var zoom = 2;
+	var zoom = 3;
 	
 	// debug shit
 	var debugMode = false; // show console output (laggy)
-	var tileLabels = false; // show debug info on tiles
+	var tileLabels = true; // show debug info on tiles
 	
 	// use the full screen
 	cv.canvas.width = window.innerWidth;
@@ -305,7 +305,7 @@ Meteor.startup(function() {
 		} else if(type == 'inline') {
 			parseMap(map, 'inline map');
 		} else {
-			alert("No such map! (Or you're trying to load an unsupported map.");
+			alert("No such map! (Or you're trying to load an unsupported map).");
 		}
 	} else {
 		alert("No map selected. Type maps() in the console for a list.");

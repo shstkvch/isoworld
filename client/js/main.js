@@ -23,7 +23,8 @@ Meteor.startup(function() {
 	var zoom = 2;
 	
 	// debug shit
-	var debugMode = true; // show console output (laggy)
+	var debugMode = false; // show console output (laggy)
+	var tileLabels = false; // show debug info on tiles
 	
 	// use the full screen
 	cv.canvas.width = window.innerWidth;
@@ -159,17 +160,18 @@ Meteor.startup(function() {
 			return false;
 		}
 	
-		
-		
-		// debug - draw x/y coords on tile
-		cv.fillStyle = 'white';
-		var xyz = x + ',' + y + ',' + level;
-		var type = resources[tileResource].name + " (#" + tileResource + ")";
-		var debugText = debugText || "";
-		cv.fillText(xyz, multX + (tileWidth / 2) - cv.measureText(xyz).width / 2, multY + (tileDepth / 2));
-		cv.fillText(type, multX + (tileWidth / 2) - cv.measureText(type).width / 2, multY + (tileDepth / 2) - 12);
-		cv.fillStyle = 'yellow';
-		cv.fillText(debugText, multX + (tileWidth / 2) - cv.measureText(type).width / 2, multY + (tileDepth / 2) + 12);
+		if(tileLabels) {
+			// debug - draw x/y coords and other info on tiles
+			cv.fillStyle = 'white';
+			var xyz = x + ',' + y + ',' + level;
+			var type = resources[tileResource].name + " (#" + tileResource + ")";
+			var debugText = debugText || "";
+			
+			cv.fillText(xyz, multX + (tileWidth / 2) - cv.measureText(xyz).width / 2, multY + (tileDepth / 2));
+			cv.fillText(type, multX + (tileWidth / 2) - cv.measureText(type).width / 2, multY + (tileDepth / 2) - 12);
+			cv.fillStyle = 'yellow';
+			cv.fillText(debugText, multX + (tileWidth / 2) - cv.measureText(type).width / 2, multY + (tileDepth / 2) + 12);		
+		}
 	}
 	
 
@@ -187,7 +189,7 @@ Meteor.startup(function() {
 		
 		clearCanvas();
 		
-		
+		drawGrid();
 		parseMap(loadedMap);
 		showNotificationIfNeeded(); // notify.js
 	}
@@ -228,6 +230,14 @@ Meteor.startup(function() {
 		
 		if (loadedMapName) {
 			notify("Loaded map '" + loadedMapName + "'!"); 
+		}
+	}
+	
+	function drawGrid() {
+		for(w=0;w<mapWidth;w++) {
+			for(h=0;h<mapHeight;h++) {
+				drawTile(w,h,4,-1);
+			}
 		}
 	}
 	

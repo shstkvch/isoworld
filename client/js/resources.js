@@ -39,7 +39,8 @@ var resources = [
 		"name": "Grid",
 		"description": "Build something on me!",
 		"tile": {
-			"stroke": "rgba(20,20,20,0.2)",
+			"stroke": "rgba(40,40,40,0.1)",
+			"fill": "rgba(40,40,40,0.1)"
 		}
 	},
 	{

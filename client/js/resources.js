@@ -9,7 +9,12 @@ var resources = {
 		"description": "Just some boring grass.",
 		"tile": {
 			"fill": "rgb(0,200,0)",
-			"image": 1
+			"image": 1,
+			"special": {
+				"ifNotTopTile": {
+					"image": "1a"
+				}
+			}
 		}
 	},
 	2: {

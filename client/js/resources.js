@@ -1,10 +1,9 @@
-var resources = [
-	{
-		"id": 0,
+var resources = {
+	0: {
 		"name": "Nothing",
 		"description": "Here for clarity... hahaha."
 	},
-	{
+	1: {
 		"id": 1,
 		"name": "Grass",
 		"description": "Just some boring grass.",
@@ -18,16 +17,14 @@ var resources = [
 			}
 		}
 	},
-	{
-		"id": 2,
+	2: {
 		"name": "Sand",
 		"description": "Wear shorts or it will get right up there.",
 		"tile": {
 			"fill": "rgb(190, 170, 30)"
 		}
 	},
-	{
-		"id": 3,
+	3: {
 		"name": "Water",
 		"description": "Delicious, clean and free. And wet.",
 		"tile": {
@@ -39,8 +36,7 @@ var resources = [
 			}
 		}
 	},
-	{
-		"id": 4,
+	4: {
 		"name": "Grid",
 		"description": "Build something on me!",
 		"tile": {
@@ -48,20 +44,18 @@ var resources = [
 			"fill": "rgba(40,40,40,0.1)"
 		}
 	},
-	{
-		"id": 5,
+	5: {
 		"name": "Black Square",
 		"description": "Half of a chess board!",
 		"tile": {
 			"fill": "rgb(30,30,30)"
 		}
 	},
-	{
-		"id": 6,
+	6: {
 		"name": "White Square",
 		"description": "Half of a chess board!",
 		"tile": {
 			"fill": "rgb(230,230,230)"
 		}
 	}
-]
+}

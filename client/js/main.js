@@ -337,6 +337,9 @@ Meteor.startup(function() {
       parseMap(testMaps[map], map);
     } else if (type == 'inline') {
       parseMap(map, 'inline map');
+    } else if (type == 'user' || 'world') {
+    	// loading a map that belongs to a user or the world (on the server)
+    	
     } else {
       alert("No such map! (Or you're trying to load an unsupported map).");
     }

@@ -23,7 +23,7 @@ Meteor.startup(function() {
 	var zoom = 2;
 	
 	// debug shit
-	var debugMode = false; // show console output (laggy)
+	var debugMode = true; // show console output (laggy)
 	var tileLabels = false; // show debug info on tiles
 	
 	// use the full screen
@@ -57,15 +57,13 @@ Meteor.startup(function() {
 				 // check for special cases
 				$.each(tileConfig.special, function(specialProperty, value) {
 					switch(specialProperty) {
-						case 'ifLastInRowOrColumn':
 						case 'ifLastInRow':
-						case 'ifLastInColumn':
-							// if this tile is the last in a series of the same tile	
+							// if this tile is the last in a row of the same tile
 							if (!value) {
 								break;
 							}
+							
 							var isLastInRow = false;
-							var isLastInColumn = false;
 							
 							// simple check - if this tile's X position is the same as the
 							// length of the row, it's the last one
@@ -81,6 +79,21 @@ Meteor.startup(function() {
 								}
 							}
 							
+							if(isLastInRow) {
+								console.log("x:", x, "y:", y, "level:", level, 'is the LAST IN THE ROW');
+								debugText = 'last in row';
+							} 
+							 
+							
+						break;
+						case 'ifLastInColumn':
+							// if this tile is the last in a column of the same tile
+							if (!value) {
+								break;
+							}
+							
+							var isLastInColumn = false;
+							
 							// if this tile's Y position is the same as the length of the col,
 							// it's the last one in the column
 							console.log(loadedMap[level]);
@@ -93,14 +106,10 @@ Meteor.startup(function() {
 								isLastInColumn = true;
 							}
 							
-							if(isLastInRow) {
-								console.log("x:", x, "y:", y, "level:", level, 'is the LAST IN THE ROW');
-								debugText = 'last in row';
-							} else if(isLastInColumn) {
+							if(isLastInColumn) {
 								console.log("x:", x, "y:", y, "level:", level, 'is the LAST IN THE COLUMN');
 								debugText = 'last in col';
 							}	
-							console.log(loadedMap);
 							//console.log('next one up is', nextOneUp);
 							
 							// check if this tile is the last in the row
@@ -243,9 +252,6 @@ Meteor.startup(function() {
 	
 	window.loadMap = parseMap;
 	
-	// draw the initial map
-	redraw(0,0);
-	
 	// handle dragging & zooming on the map (from http://jsfiddle.net/W7tvD/)
 	var lastX;
 	var lastY;
@@ -308,6 +314,7 @@ Meteor.startup(function() {
 			alert("No such map! (Or you're trying to load an unsupported map.");
 		}
 	} else {
-		alert("No map selected. Type maps() in the console for a list.");
+		redraw();
+		notify("No map loaded :(");
 	}
 });

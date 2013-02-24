@@ -49,10 +49,10 @@ Meteor.startup(function() {
       // do we have a resource for this tile? (i.e., a number that we can look up)
       // console.log('PAN:', pan, 'TILT:', tilt, 'L:', level, 'X:', x, 'Y:', y, 'got data ', resources[tileResource], ' for resource ' +  tileResource);
       var tileConfig = resources[tileResource].tile;
+      var ifNotTopTile = false;
       if (tileConfig.special) {
         console.log('** SPECIAL TILE **', tileConfig);
         // check for special cases
-        ifNotTopTile = false;
         $.each(tileConfig.special, function(specialProperty, value) {
           switch (specialProperty) {
           case 'ifLastInRowOrColumn':
@@ -148,26 +148,51 @@ Meteor.startup(function() {
         // we're doing a basic filled cube
         cv.fillStyle = tileConfig.fill;
         cv.strokeStyle = tileConfig.stroke || 'rgba(0,0,0, 0.2)';
-        // TOP
+        
+        // TOP FACE
         cv.beginPath();
-
         // line 1
         cv.moveTo(multX, multY + tileDepth / 2);
         cv.lineTo(multX + (tileWidth / 2), multY + tileDepth);
-
         // line 2
         cv.lineTo(multX + tileWidth, multY + tileDepth / 2);
-
         // line 3
         cv.lineTo(multX + tileWidth / 2, multY + 0);
-
         // line 4
         cv.lineTo(multX, multY + tileDepth / 2);
-
         cv.closePath();
         cv.stroke()
         cv.fill();
-
+        
+        // LEFT FACE
+        cv.beginPath();
+        // line 1
+        cv.moveTo(multX, multY + tileDepth / 2);
+        cv.lineTo(multX, multY + 3 * tileDepth / 2);
+        // line 2
+        cv.lineTo(multX + tileWidth / 2, multY + tileHeight);
+        // line 3
+        cv.lineTo(multX + tileWidth / 2, multY + tileDepth);
+        // line 4
+        cv.lineTo(multX, multY + tileDepth / 2);
+        cv.closePath();
+        cv.stroke()
+        cv.fill();
+        
+        // RIGHT FACE
+        cv.beginPath();
+        // line 1
+        cv.moveTo(multX + tileWidth / 2, multY + tileDepth);
+        cv.lineTo(multX + tileWidth, multY + tileDepth / 2);
+        // line 2
+        cv.lineTo(multX + tileWidth, multY + 3 * tileDepth / 2);
+        // line 3
+        cv.lineTo(multX + tileWidth / 2, multY + tileHeight);
+        // line 4
+        cv.lineTo(multX + tileWidth / 2, multY + tileDepth);
+        cv.closePath();
+        cv.stroke()
+        cv.fill();
 
 
       } else {

@@ -24,7 +24,7 @@ Meteor.startup(function() {
   // debug shit
   var debugMode = false; // show console output (laggy)
   var debugOverlay = true;
-  var tileLabels = false; // show debug info on tiles
+  var tileLabels = true; // show debug info on tiles
   
   // use the full screen
   cv.canvas.width = window.innerWidth;
@@ -49,7 +49,12 @@ Meteor.startup(function() {
       // do we have a resource for this tile? (i.e., a number that we can look up)
       // console.log('PAN:', pan, 'TILT:', tilt, 'L:', level, 'X:', x, 'Y:', y, 'got data ', resources[tileResource], ' for resource ' +  tileResource);
       var tileConfig = resources[tileResource].tile;
-      var ifNotTopTile = false;
+      
+      var ifNotTopTile   = false;
+      var isLastInRow    = false;
+      var isLastInColumn = false;
+      
+      
       if (tileConfig.special) {
         console.log('** SPECIAL TILE **', tileConfig);
         // check for special cases
@@ -62,8 +67,7 @@ Meteor.startup(function() {
             if (!value) {
               break;
             }
-            var isLastInRow = false;
-            var isLastInColumn = false;
+
 
             // simple check - if this tile's X position is the same as the
             // length of the row, it's the last one
@@ -113,7 +117,6 @@ Meteor.startup(function() {
                 loadedMap[level + 1][x][y] && 
                 loadedMap[level + 1][x][y] !== 0) {
               isNotTopTile = true;
-              debugText = "NOT TOP!";
             } 
             break;
           }
@@ -164,35 +167,38 @@ Meteor.startup(function() {
         cv.stroke()
         cv.fill();
         
-        // LEFT FACE
-        cv.beginPath();
-        // line 1
-        cv.moveTo(multX, multY + tileDepth / 2);
-        cv.lineTo(multX, multY + 3 * tileDepth / 2);
-        // line 2
-        cv.lineTo(multX + tileWidth / 2, multY + tileHeight);
-        // line 3
-        cv.lineTo(multX + tileWidth / 2, multY + tileDepth);
-        // line 4
-        cv.lineTo(multX, multY + tileDepth / 2);
-        cv.closePath();
-        cv.stroke()
-        cv.fill();
-        
-        // RIGHT FACE
-        cv.beginPath();
-        // line 1
-        cv.moveTo(multX + tileWidth / 2, multY + tileDepth);
-        cv.lineTo(multX + tileWidth, multY + tileDepth / 2);
-        // line 2
-        cv.lineTo(multX + tileWidth, multY + 3 * tileDepth / 2);
-        // line 3
-        cv.lineTo(multX + tileWidth / 2, multY + tileHeight);
-        // line 4
-        cv.lineTo(multX + tileWidth / 2, multY + tileDepth);
-        cv.closePath();
-        cv.stroke()
-        cv.fill();
+        if (isLastInColumn) {
+          // LEFT FACE
+          cv.beginPath();
+          // line 1
+          cv.moveTo(multX, multY + tileDepth / 2);
+          cv.lineTo(multX, multY + 3 * tileDepth / 2);
+          // line 2
+          cv.lineTo(multX + tileWidth / 2, multY + tileHeight);
+          // line 3
+          cv.lineTo(multX + tileWidth / 2, multY + tileDepth);
+          // line 4
+          cv.lineTo(multX, multY + tileDepth / 2);
+          cv.closePath();
+          cv.stroke()
+          cv.fill();
+        }
+        if (isLastInRow) {
+          // RIGHT FACE
+          cv.beginPath();
+          // line 1
+          cv.moveTo(multX + tileWidth / 2, multY + tileDepth);
+          cv.lineTo(multX + tileWidth, multY + tileDepth / 2);
+          // line 2
+          cv.lineTo(multX + tileWidth, multY + 3 * tileDepth / 2);
+          // line 3
+          cv.lineTo(multX + tileWidth / 2, multY + tileHeight);
+          // line 4
+          cv.lineTo(multX + tileWidth / 2, multY + tileDepth);
+          cv.closePath();
+          cv.stroke()
+          cv.fill();
+        }
 
 
       } else {

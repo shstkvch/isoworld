@@ -153,6 +153,8 @@ Meteor.startup(function() {
         cv.fillStyle = tileConfig.fill;
         cv.strokeStyle = tileConfig.stroke || 'rgba(0,0,0, 0.2)';
         
+        
+        
         // TOP FACE
         if (!isNotTopTile) {
           cv.beginPath();

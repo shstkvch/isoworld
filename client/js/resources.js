@@ -34,7 +34,8 @@ var resources = {
 			"special": {
 				"ifLastInRowOrColumn": {
 					"fill": "red"
-				}
+				},
+				ifNotTopTile: {}
 			}
 		}
 	},

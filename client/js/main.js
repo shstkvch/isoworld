@@ -51,6 +51,7 @@ Meteor.startup(function() {
       var tileConfig = resources[tileResource].tile;
       
       var ifNotTopTile   = false;
+      var isNotTopTile   = false;
       var isLastInRow    = false;
       var isLastInColumn = false;
       
@@ -153,19 +154,21 @@ Meteor.startup(function() {
         cv.strokeStyle = tileConfig.stroke || 'rgba(0,0,0, 0.2)';
         
         // TOP FACE
-        cv.beginPath();
-        // line 1
-        cv.moveTo(multX, multY + tileDepth / 2);
-        cv.lineTo(multX + (tileWidth / 2), multY + tileDepth);
-        // line 2
-        cv.lineTo(multX + tileWidth, multY + tileDepth / 2);
-        // line 3
-        cv.lineTo(multX + tileWidth / 2, multY + 0);
-        // line 4
-        cv.lineTo(multX, multY + tileDepth / 2);
-        cv.closePath();
-        cv.stroke()
-        cv.fill();
+        if (!isNotTopTile) {
+          cv.beginPath();
+          // line 1
+          cv.moveTo(multX, multY + tileDepth / 2);
+          cv.lineTo(multX + (tileWidth / 2), multY + tileDepth);
+          // line 2
+          cv.lineTo(multX + tileWidth, multY + tileDepth / 2);
+          // line 3
+          cv.lineTo(multX + tileWidth / 2, multY + 0);
+          // line 4
+          cv.lineTo(multX, multY + tileDepth / 2);
+          cv.closePath();
+          cv.stroke()
+          cv.fill();
+        }
         
         if (isLastInColumn) {
           // LEFT FACE

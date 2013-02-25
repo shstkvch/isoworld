@@ -34,7 +34,8 @@ var resources = {
 			"special": {
 				"ifLastInRowOrColumn": {
 					"fill": "red"
-				}
+				},
+				ifNotTopTile: {}
 			}
 		}
 	},
@@ -50,14 +51,20 @@ var resources = {
 		"name": "Black Square",
 		"description": "Half of a chess board!",
 		"tile": {
-			"fill": "rgb(30,30,30)"
+			"fill": "rgb(30,30,30)",
+			special: {
+			  ifLastInRowOrColumn: {}
+			}
 		}
 	},
 	6: {
 		"name": "White Square",
 		"description": "Half of a chess board!",
 		"tile": {
-			"fill": "rgb(230,230,230)"
+			"fill": "rgb(230,230,230)",
+			special: {
+			  ifLastInRowOrColumn: {}
+			}
 		}
 	},
 	7: {

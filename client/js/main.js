@@ -2,7 +2,7 @@ Meteor.startup(function() {
   var canvas = document.getElementById('isocanvas');
   var cv = canvas.getContext('2d');
 
-  var mapWidth = 24;
+  var mapWidth =  24;
   var mapHeight = 24;
 
   // map stuff
@@ -25,6 +25,10 @@ Meteor.startup(function() {
   var debugMode = false; // show console output (laggy)
   var debugOverlay = true;
   var tileLabels = false; // show debug info on tiles
+  
+  // world cursor
+  var worldCursorX = 0;
+  var worldCursorY = 0;
   
   // use the full screen
   cv.canvas.width = window.innerWidth;
@@ -172,7 +176,7 @@ Meteor.startup(function() {
           cv.fill();
         }
         
-        if (isLastInColumn) {
+        if (isLastInColumn || tileConfig.primitive == 'cube' || '') {
           // LEFT FACE
           cv.beginPath();
           // line 1
@@ -188,7 +192,7 @@ Meteor.startup(function() {
           cv.stroke()
           cv.fill();
         }
-        if (isLastInRow) {
+        if (isLastInRow || tileConfig.primitive == 'cube' || '') {
           // RIGHT FACE
           cv.beginPath();
           // line 1
@@ -228,14 +232,6 @@ Meteor.startup(function() {
       cv.fillStyle = 'yellow';
       cv.fillText(debugText, multX + (tileWidth / 2) - cv.measureText(type).width / 2, multY + (tileDepth / 2) + (zoom/10));
     }
-    
-    if (debugOverlay) {
-      cv.fillStyle = 'white';
-      cv.font = '12px monospace';
-      cv.fillText("Pan:  " + pan,        10, 15);
-      cv.fillText("Tilt: " + tilt,       10, 30);
-      cv.fillText("Zoom: " + zoom + "%", 10, 45);
-    }
   }
 
 
@@ -260,6 +256,17 @@ Meteor.startup(function() {
     drawGrid();
     parseMap(loadedMap);
     showNotificationIfNeeded(); // notify.js
+        
+    if (debugOverlay) {
+      cv.fillStyle = 'white';
+      cv.font = '12px monospace';
+      cv.fillText("Pan:  " + pan,        10, 15);
+      cv.fillText("Tilt: " + tilt,       10, 30);
+      cv.fillText("Zoom: " + zoom + "%", 10, 45);
+    }
+    
+    // draw the cursor
+   // drawTile(worldCursorX, worldCursorY, 1, 0);
   }
 
   function parseMap(mapdata, mapname) {
@@ -332,7 +339,21 @@ Meteor.startup(function() {
       //redraw with pan/tilt
       redraw();
     }
+    
+   // updateWorldCursor(e.pageX,e.pageY, pan, tilt);
+    redraw();
   });
+  
+  function updateWorldCursor(x,y, pan, tilt) {
+  		var panFixed = pan - x;
+  		var tiltFixed = tilt - y;
+  		
+  		var xPos = Math.ceil(panFixed / tileWidth - (tiltFixed & 1)*0.5);
+      var yPos = (tiltFixed / tileDepth * 2);
+      
+     // worldCursorX = xPos;
+     // worldCursorY = yPos;
+  }
 	
 	$(canvas).mousewheel(function (e, delta) {
     e.preventDefault();

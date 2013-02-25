@@ -33,7 +33,6 @@ var resources = {
 			"stroke": "rgba(20,20,20,0.1)",
 			"special": {
 				"ifLastInRowOrColumn": {
-					"fill": "red"
 				},
 				ifNotTopTile: {}
 			}
@@ -44,7 +43,8 @@ var resources = {
 		"description": "Build something on me!",
 		"tile": {
 			"stroke": "rgba(40,40,40,0.1)",
-			"fill": "rgba(40,40,40,0.1)"
+			"fill": "rgba(40,40,40,0.1)",
+			"primitive": "plane"
 		}
 	},
 	5: {
@@ -52,9 +52,7 @@ var resources = {
 		"description": "Half of a chess board!",
 		"tile": {
 			"fill": "rgb(30,30,30)",
-			special: {
-			  ifLastInRowOrColumn: {}
-			}
+			"primitive": "cube"
 		}
 	},
 	6: {
@@ -62,9 +60,7 @@ var resources = {
 		"description": "Half of a chess board!",
 		"tile": {
 			"fill": "rgb(230,230,230)",
-			special: {
-			  ifLastInRowOrColumn: {}
-			}
+			"primitive": "cube"
 		}
 	},
 	7: {

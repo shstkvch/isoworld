@@ -59,5 +59,12 @@ var resources = {
 		"tile": {
 			"fill": "rgb(230,230,230)"
 		}
+	},
+	7: {
+		"name": "Shitty Stairs",
+		"description": "Horrible, just horrible.",
+		"tile": {
+			"image": 7
+		}
 	}
 }

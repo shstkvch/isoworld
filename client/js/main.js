@@ -24,7 +24,7 @@ Meteor.startup(function() {
   // debug shit
   var debugMode = false; // show console output (laggy)
   var debugOverlay = true;
-  var tileLabels = true; // show debug info on tiles
+  var tileLabels = false; // show debug info on tiles
   
   // use the full screen
   cv.canvas.width = window.innerWidth;

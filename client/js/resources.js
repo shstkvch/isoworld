@@ -30,6 +30,7 @@ var resources = {
 		"description": "Delicious, clean and free. And wet.",
 		"tile": {
 			"fill": "rgba(40, 150, 255, 0.5)",
+			"stroke": "rgba(20,20,20,0.1)",
 			"special": {
 				"ifLastInRowOrColumn": {
 					"fill": "red"

@@ -1,10 +1,10 @@
 {
-   0: {
+   "0": {
       "name": "Nothing",
       "description": "Here for clarity... hahaha.",
       "creator": 0
       },
-   1: {
+   "1": {
       "id": 1,
       "name": "Grass",
       "description": "Just some boring grass.",
@@ -19,7 +19,7 @@
       },
       "creator": 0
    },
-   2: {
+   "2": {
       "name": "Sand",
       "description": "Wear shorts or it will get right up there.",
       "tile": {
@@ -28,7 +28,7 @@
       },
       "creator": 0
    },
-   3: {
+   "3": {
       "name": "Water",
       "description": "Delicious, clean and free. And wet.",
       "tile": {
@@ -37,12 +37,12 @@
          "special": {
             "ifLastInRowOrColumn": {
             },
-            ifNotTopTile: {}
+            "ifNotTopTile": {}
          }
       },
       "creator": 0
    },
-   4: {
+   "4": {
       "name": "Grid",
       "description": "Build something on me!",
       "tile": {
@@ -52,7 +52,7 @@
       },
       "creator": 0
    },
-   5: {
+   "5": {
       "name": "Black Square",
       "description": "Half of a chess board!",
       "tile": {
@@ -61,7 +61,7 @@
       },
       "creator": 0
    },
-   6: {
+   "6": {
       "name": "White Square",
       "description": "Half of a chess board!",
       "tile": {
@@ -70,11 +70,12 @@
       },
       "creator": 0
    },
-   7: {
+   "7": {
       "name": "Shitty Stairs",
       "description": "Horrible, just horrible.",
       "tile": {
          "image": 7
       },
       "creator": 0
+   }
 }

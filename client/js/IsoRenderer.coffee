@@ -1,4 +1,4 @@
-class isoRenderer
+class IsoRenderer
 	constructor: (@canvasId, @camera) ->
 		# set up the canvas
 		@canvas = document.getElementById(@canvasId).getContext('2d')

@@ -8,7 +8,7 @@ Meteor.startup ->
 		Meteor.autorun ->
 			# TODO: subscribe to the world on load
 			Meteor.subscribe "world"
-		isoWorld.renderer = new isoRenderer 'isocanvas', isoWorld.camera
+		isoWorld.renderer = new IsoRenderer 'isocanvas', isoWorld.camera
 		isoWorld.camera = new Camera "Main Camera"
 		isoWorld.renderer.redraw()
 		isoWorld.input = new InputManager isoWorld.camera
